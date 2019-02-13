@@ -1,25 +1,27 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
-class App extends Component {
+import Form from './components/Form';
+import Message from './components/Message';
+
+class App extends React.Component {
+  state = {
+    messages: {},
+    pseudo: this.props.match.params.pseudo
+  };
+
+  addMessage = message => {
+    const messages = { ...this.state.messages };
+    const timestamp = `message-${Date.now()}`;
+    messages[timestamp] = message;
+    this.setState({ messages });
+  };
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="box">
+        <div className="messages" />
+        <Form pseudo={this.state.pseudo} addMessage={this.addMessage} />
       </div>
     );
   }
