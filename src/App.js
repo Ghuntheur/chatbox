@@ -4,11 +4,21 @@ import './App.css';
 import Form from './components/Form';
 import Message from './components/Message';
 
+// Firebase
+import base from './base';
+
 class App extends React.Component {
   state = {
     messages: {},
     pseudo: this.props.match.params.pseudo
   };
+
+  componentDidMount() {
+    base.syncState('/', {
+      context: this,
+      state: 'messages'
+    });
+  }
 
   addMessage = message => {
     const messages = { ...this.state.messages };
