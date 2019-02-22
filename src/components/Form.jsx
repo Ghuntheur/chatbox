@@ -2,7 +2,8 @@ import React from 'react';
 
 class Form extends React.Component {
   state = {
-    message: ''
+    message: '',
+    length: this.props.length
   };
 
   handleSubmit = ev => {
@@ -11,7 +12,14 @@ class Form extends React.Component {
   };
 
   handleChange = ev => {
-    this.setState({ message: ev.target.value });
+    this.setState({
+      message: ev.target.value,
+      length: this.props.length - ev.target.value.length
+    });
+  };
+
+  handleKeyUp = ev => {
+    if (ev.key === 'Enter') this.createMessage();
   };
 
   createMessage = () => {
@@ -25,11 +33,12 @@ class Form extends React.Component {
       <form className="form" onSubmit={this.handleSubmit}>
         <textarea
           required
-          maxLength="140"
+          maxLength={this.props.length}
           value={this.state.message}
           onChange={this.handleChange}
+          onKeyUp={this.handleKeyUp}
         />
-        <div className="info">140</div>
+        <div className="info">{this.state.length}</div>
         <button type="submit">Envoyer</button>
       </form>
     );

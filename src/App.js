@@ -20,8 +20,18 @@ class App extends React.Component {
   render() {
     return (
       <div className="box">
-        <div className="messages" />
-        <Form pseudo={this.state.pseudo} addMessage={this.addMessage} />
+        <div className="messages">
+          <div className="message">
+            {Object.keys(this.state.messages).map(key => (
+              <Message
+                key={key}
+                message={this.state.messages[key].message}
+                pseudo={this.state.messages[key].pseudo}
+              />
+            ))}
+          </div>
+        </div>
+        <Form length={140} pseudo={this.state.pseudo} addMessage={this.addMessage} />
       </div>
     );
   }
